@@ -1,4 +1,5 @@
-import { PriceHistoryItem } from "@/types";
+import { PriceHistoryItem, User } from "@/types";
+import Product from "../models/product.model";
 
 
 export function extractprice(...elements:any) {
@@ -52,4 +53,25 @@ export function getaverageprice(pricelist:PriceHistoryItem[]){
 export function extractcurrency(elements:any) {
     const currencytext = elements.text().trim().slice(0,1);
     return currencytext?currencytext:'';
+}
+
+export async function addusertoproduct(productid:string,useremail:string){
+    try {
+        if(!productid)return ;
+        const product = await Product.findById(productid);
+        if(!product)return ;
+        const userexisting = product.users.some((user:User) =>user.email===useremail);
+        if(!userexisting) {
+            product.users.push({email:useremail});
+            await product.save();
+            const emailcontent = generateemailbody(product,"Welcome")
+        }
+
+    } catch (error) {
+        
+    }
+}
+
+export async function generateemailbody(params:type) {
+    
 }

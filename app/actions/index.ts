@@ -19,7 +19,7 @@ try {
     
     if(!scrapedproduct)return ;
     let product:any = scrapedproduct;
-    console.log(product);
+   // console.log(product);
     
     const existingproduct = await Product.findOne({url:producturl})
     if(existingproduct){

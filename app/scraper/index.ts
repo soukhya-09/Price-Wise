@@ -53,11 +53,15 @@ console.log(isoutofstock);
 
     const images =$("#imgBlkFront").attr('data-a-dynamic-image') || $("#landingImage").attr('data-a-dynamic-image') || '{}'
     const imageurls = Object.keys(JSON.parse(images))||[]
-  
-     
+    let likes = $("#averageCustomerReviews .a-declarative #acrPopover span.a-size-base.a-color-base").text().trim();
+
+    likes = likes.split(" ")[0];
+    const numlikes = parseFloat(likes)
+    console.log("from here",likes);
      const currency = extractcurrency($(".a-price-symbol"));
    const discountrate = $(".savingsPercentage").text().replace(/[-%]/g,"");
 const description = extractdescription($);
+const arr = [parseFloat(currentprice),parseFloat(originalprice)];
 
    const data={
     url,
@@ -70,13 +74,13 @@ const description = extractdescription($);
     pricehistory:[],
     discountrate:Number(discountrate),
     category:'category',
-    reviewscount:100,
-    stars:4.5,
+    reviewscount:numlikes,
+    stars:likes,
     isoutofstock:isoutofstock,
     description:description,
-    lowestprice:Number(originalprice)||Number(currentprice),
-    highestprice:Number(originalprice)||Number(currentprice),
-    averageprice:Number(originalprice)||Number(currentprice)
+    lowestprice:(Number(originalprice)>Number(currentprice) ?Number(currentprice):Number(originalprice)),
+    highestprice:(Number(originalprice)<Number(currentprice) ?Number(currentprice):Number(originalprice)),
+    averageprice:(Number(originalprice)+Number(currentprice))/2
    }
    // console.log(data.moreimages);
     
