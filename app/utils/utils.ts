@@ -72,6 +72,3 @@ export async function addusertoproduct(productid:string,useremail:string){
     }
 }
 
-export async function generateemailbody(params:type) {
-    
-}
